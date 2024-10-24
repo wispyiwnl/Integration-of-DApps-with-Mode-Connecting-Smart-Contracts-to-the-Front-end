@@ -1,0 +1,31 @@
+{
+    "address": "0x3b8ABfEADD0222F8D94aC9e85e352fD76F8517a6",
+    "abi": [
+        {
+            "type": "function",
+            "name": "getMessage",
+            "inputs": [],
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "string",
+                    "internalType": "string"
+                }
+            ],
+            "stateMutability": "view"
+        },
+        {
+            "type": "function",
+            "name": "setMessage",
+            "inputs": [
+                {
+                    "name": "newMessage",
+                    "type": "string",
+                    "internalType": "string"
+                }
+            ],
+            "outputs": [],
+            "stateMutability": "nonpayable"
+        }
+    ]
+}

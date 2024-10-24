@@ -1,11 +1,52 @@
+'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
+import { FormEvent, useEffect, useState } from "react";
+import abi from "../../abi.json";
+import { useReadContract, useWriteContract } from 'wagmi'
 
 export default function Home() {
+  const [message, setMessage] = useState("")
+  const result = useReadContract({
+    abi: abi.abi,
+    address: abi.address as `0x${string}`,
+    functionName: 'getMessage',
+  })
+
+  const { writeContract } = useWriteContract()
+
+  useEffect(() => {
+    if (result.data) {
+      console.log({ result: result.data });
+      setMessage(result.data as string);
+    }
+  }, [result])
+
+
+  const changeMessage = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const form = event.target as HTMLFormElement;
+    const inputUsed = (form.elements[0] as HTMLInputElement).value as string;
+    writeContract({
+      abi: abi.abi,
+      address: abi.address as '0x${string}',
+      functionName: 'setMessage',
+      args: [inputUsed],
+    })
+  };
+
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
         <w3m-button />
+        {message === "" ? 'Hello Mode' : message}
+
+        <form onSubmit={changeMessage}>
+          <input type="text" name="name" />
+          <button type="submit">Send</button>
+        </form>
         <p>
           Get started by editing&nbsp;
           <code className={styles.code}>src/app/page.tsx</code>
